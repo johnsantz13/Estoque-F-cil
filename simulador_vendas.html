@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque Fácil - Simulador de Vendas</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Favicon (60x40 PNG recomendado) -->
+    <link rel="icon" type="image/png" sizes="60x40" href="/imagens/favicon-60x40.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="font-[Inter,sans-serif] h-screen overflow-hidden">
+
+    <!-- ========== BARRA LATERAL ========== -->
+    <div data-include="sidebar"></div>
+    
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div id="main-content" class="relative h-screen overflow-y-auto">
+        <div data-include="header"></div>
+
+        <!-- Conteúdo Específico da Página -->
+        <main class="p-6 space-y-6">
+            <!-- Configuração do Período -->_
+            <div class="bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold text-gray-700 dark:text-white mb-4">Configuração do Período</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                    <div>
+                        <label for="start-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de Início</label>
+                        <input type="date" id="start-date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    </div>
+                    <div>
+                        <label for="end-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de Fim</label>
+                        <input type="date" id="end-date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                    </div>
+                     <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Período Selecionado</label>
+                        <p id="period-display" class="text-sm text-gray-500 p-2.5">N/A</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="simulate-btn" class="w-full text-white bg-orange-600 hover:bg-orange-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center">
+                            <i class="bi bi-play-fill text-lg mr-2"></i>Simular
+                        </button>
+                        <button id="reset-btn" class="w-full text-gray-700 bg-gray-200 hover:bg-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center">
+                            <i class="bi bi-arrow-counterclockwise text-lg mr-2"></i>Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Análise de Ingredientes -->_
+             <div class="bg-white/80 backdrop-blur-sm dark:bg-gray-800/80 p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold text-gray-700 dark:text-white mb-4">Análise de Ingredientes</h2>
+                <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">Ingredientes</th>
+                                <th scope="col" class="px-6 py-3">Estoque Atual</th>
+                                <th scope="col" class="px-6 py-3">Estoque Previsto</th>
+                                <th scope="col" class="px-6 py-3">Diferença</th>
+                                <th scope="col" class="px-6 py-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="simulation-table-body">
+                           <!-- Linha 1 -->
+                           <tr class="simulation-row bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                               <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Farinha de Trigo</td>
+                               <td class="px-6 py-4" data-current-stock="500">500 Kg</td>
+                               <td class="px-6 py-4 predicted-stock">--</td>
+                               <td class="px-6 py-4 difference">--</td>
+                               <td class="px-6 py-4 status">--</td>
+                           </tr>
+                           <!-- Linha 2 -->
+                           <tr class="simulation-row bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                               <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Açúcar Cristal</td>
+                               <td class="px-6 py-4" data-current-stock="200">200 Kg</td>
+                               <td class="px-6 py-4 predicted-stock">--</td>
+                               <td class="px-6 py-4 difference">--</td>
+                               <td class="px-6 py-4 status">--</td>
+                           </tr>
+                           <!-- Linha 3 -->
+                           <tr class="simulation-row bg-white dark:bg-gray-800">
+                               <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Ovos</td>
+                               <td class="px-6 py-4" data-current-stock="150">150 Unidades</td>
+                               <td class="px-6 py-4 predicted-stock">--</td>
+                               <td class="px-6 py-4 difference">--</td>
+                               <td class="px-6 py-4 status">--</td>
+                           </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="/js/includes.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
